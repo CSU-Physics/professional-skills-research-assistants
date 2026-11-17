@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 5 Try it: Plan a week</title>
+<style>
+:root{--p:#99004C;--bg:#F8F4F6;--line:#E4DCE0;--mut:#6A626B;--ink:#2B2530;--gold:#FFCD00;--ok:#1B6B3A;--okbg:#EAF5EE;--bad:#8A2A00;--badbg:#FBEFE8}
+*{box-sizing:border-box}
+html{color-scheme:light}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.45}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif;font-weight:700;line-height:1.2;margin:0 0 .5em}
+a{color:var(--p)}
+button{font:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,.deck:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.btn{padding:.5em 1.1em;border-radius:5px;border:1px solid var(--p);background:var(--p);color:#fff;font-weight:600}
+.btn.alt{background:#fff;color:var(--p)}
+.btn:disabled{opacity:.45;cursor:default}
+
+html{font-size:17px}
+.wrap{max-width:46rem;margin:0 auto;padding:1.2rem 1.2rem 2.4rem}
+.hero{border:1px solid var(--line);border-radius:5px;overflow:hidden;background:#fff;margin-bottom:1rem}
+.hero .h{background:var(--p);color:#fff;padding:.9rem 1.2rem}
+.hero .h p{margin:0;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:#FFE27A;font-weight:700}
+.hero .h h1{margin:.15rem 0 0;font-size:1.6rem;color:#fff}
+.hero .t{background:var(--bg);padding:.7rem 1.2rem;color:var(--mut);font-size:.95rem}
+.hero .t p{margin:0}
+fieldset{border:1px solid var(--line);border-radius:5px;background:#fff;margin:0 0 1rem;padding:.9rem 1.2rem 1rem}
+legend{font-weight:700;padding:0 .4rem;color:var(--p)}
+.ctx{margin:0 0 .7rem;font-size:1.02rem}
+.opt{display:flex;gap:.6rem;align-items:flex-start;padding:.55rem .7rem;border:1px solid var(--line);border-radius:5px;margin:.4rem 0;background:#fff;cursor:pointer}
+.opt input{margin-top:.3rem;flex:none;width:1.05rem;height:1.05rem;accent-color:var(--p)}
+.opt span{flex:1}
+.opt.msg span{font-size:.98rem}
+.fb{margin:.7rem 0 0;padding:.6rem .8rem;border-radius:5px;font-size:.98rem}
+.fb.good{background:var(--okbg);color:var(--ok);border:1px solid #BFE0CB}
+.fb.miss{background:var(--badbg);color:var(--bad);border:1px solid #EBCDBB}
+.fb b{font-weight:700}
+.actions{display:flex;flex-wrap:wrap;gap:.6rem;margin:1rem 0}
+.score{font-size:1.1rem;font-weight:700;margin:.5rem 0}
+label.f{display:block;font-weight:600;margin:.8rem 0 .25rem}
+.hint{display:block;font-weight:400;color:var(--mut);font-size:.9rem}
+input[type=text],input[type=number],textarea{width:100%;font:inherit;padding:.5rem .6rem;border:1px solid #9B8F98;border-radius:5px;background:#fff;color:var(--ink)}
+textarea{min-height:4.5rem;resize:vertical}
+output,.out{display:block}
+pre.report{white-space:pre-wrap;word-wrap:break-word;font:inherit;background:#fff;border:1px solid var(--line);border-radius:5px;padding:.9rem 1.1rem;margin:0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+table{border-collapse:collapse;width:100%;background:#fff;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:.45rem .6rem;text-align:left;vertical-align:top}
+th{background:var(--bg)}
+.small{font-size:.9rem;color:var(--mut)}
+.row{display:grid;grid-template-columns:1fr 7rem;gap:.6rem;margin:.4rem 0}
+.days{display:grid;grid-template-columns:repeat(5,1fr);gap:.5rem}
+.days div label{display:block;font-weight:600;font-size:.9rem}
+.status-line{margin:.7rem 0;padding:.6rem .8rem;border-radius:5px;font-weight:600}
+.status-line.good{background:var(--okbg);color:var(--ok);border:1px solid #BFE0CB}
+.status-line.miss{background:var(--badbg);color:var(--bad);border:1px solid #EBCDBB}
+.foot{margin-top:1.4rem;padding-top:.8rem;border-top:1px solid var(--line);color:var(--mut);font-size:.85rem}
+@media (max-width:560px){.grid2{grid-template-columns:1fr}.days{grid-template-columns:repeat(2,1fr)}}
+@media print{.actions,button{display:none}body{background:#fff}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header class="hero">
+<div class="h"><p>Module 5 · Try it</p><h1>Plan a week</h1></div>
+<div class="t"><p>Break a task into steps, add a buffer, and see whether it fits the hours you are scheduled to work.</p></div>
+</header>
+<p>Plan one task around the hours you are scheduled to work. The example is already filled in. Change the numbers to match your own week.</p>
+<h2 style="font-size:1.15rem">1. Your scheduled research hours</h2>
+<div class="days" id="cap"></div>
+<p class="small">Use the hours you are scheduled to work, not extra hours nobody has agreed to. Put 0 on a day you are not scheduled.</p>
+<h2 style="font-size:1.15rem;margin-top:1.2rem">2. The steps of one task</h2>
+<p class="small">Write steps you could finish in one sitting. Put the step you understand least first, because that is where a surprise is most likely.</p>
+<div id="steps"></div>
+<div class="actions">
+<button type="button" class="btn alt" id="add">Add a step</button>
+<button type="button" class="btn alt" id="remove">Remove the last step</button>
+</div>
+<h2 style="font-size:1.15rem;margin-top:1.2rem">3. Buffer</h2>
+<label class="f" for="buf">Buffer as a percentage of the steps <span class="hint">Estimates usually run low. About 25 is a good start.</span></label>
+<input type="text" id="buf" inputmode="decimal" value="25" autocomplete="off" style="max-width:8rem">
+<h2 style="font-size:1.15rem;margin-top:1.4rem">Your plan</h2>
+<p class="status-line" id="verdict" role="status" aria-live="polite"></p>
+<table>
+<thead><tr><th scope="col">Day</th><th scope="col">Scheduled</th><th scope="col">Planned work</th></tr></thead>
+<tbody id="plan"></tbody>
+</table>
+<p class="small" style="margin-top:.8rem">If the first step runs long on Monday, you are at risk already. Tell your supervisor that day: what happened, your new estimate, what you need, and what you can still send by the original date.</p>
+<p class="foot">SemiAcademy · Professional Skills for Research Assistants. Practice only: nothing you type here is saved or sent anywhere, and it is not graded.</p>
+</main>
+<script>
+(function(){
+ var days=['Monday','Tuesday','Wednesday','Thursday','Friday'];
+ var host=document.getElementById('steps'), res=document.getElementById('result');
+ var steps=[{n:'Clean the data for runs 10 to 14',h:2},{n:'Run the calibration',h:2},{n:'Build the figure',h:2},{n:'Check the figure and write the caption',h:1}];
+ var cap=[3,0,3,3,0];
+ function fmt(x){return String(Math.round(x*100)/100);}
+ function num(v){var x=parseFloat(String(v).replace(',','.'));return isNaN(x)||x<0?0:x;}
+ function renderSteps(){
+  host.innerHTML='';
+  steps.forEach(function(s,i){
+   var row=document.createElement('div'); row.className='row';
+   var a=document.createElement('div'); var la=document.createElement('label'); la.className='f'; la.htmlFor='sn'+i; la.textContent='Step '+(i+1); var ia=document.createElement('input'); ia.type='text'; ia.id='sn'+i; ia.value=s.n; ia.autocomplete='off';
+   ia.addEventListener('input',function(){steps[i].n=ia.value;calc();}); a.appendChild(la); a.appendChild(ia);
+   var b=document.createElement('div'); var lb=document.createElement('label'); lb.className='f'; lb.htmlFor='sh'+i; lb.textContent='Hours'; var ib=document.createElement('input'); ib.type='text'; ib.inputMode='decimal'; ib.id='sh'+i; ib.value=s.h; ib.autocomplete='off';
+   ib.addEventListener('input',function(){steps[i].h=num(ib.value);calc();}); b.appendChild(lb); b.appendChild(ib);
+   row.appendChild(a); row.appendChild(b); host.appendChild(row);
+  });
+ }
+ function calc(){
+  var total=0; steps.forEach(function(s){total+=num(s.h);});
+  var pct=num(document.getElementById('buf').value);
+  var buffer=total*pct/100, need=total+buffer;
+  var sched=0; cap.forEach(function(c){sched+=c;});
+  var items=steps.filter(function(s){return s.n.trim()||num(s.h)>0;}).map(function(s){return {n:s.n.trim()||'Untitled step',h:num(s.h)};});
+  items.push({n:'Buffer ('+fmt(pct)+'%)',h:buffer});
+  var rows=days.map(function(d,i){return {d:d,c:cap[i],left:cap[i],w:[]};});
+  var k=0;
+  items.forEach(function(it){
+   var rem=it.h;
+   while(rem>0.0001){
+    while(k<rows.length&&rows[k].left<=0.0001)k++;
+    if(k>=rows.length){var ns=rows[rows.length-1]; if(ns.d!=='Not scheduled'){ns={d:'Not scheduled',c:0,left:0,w:[]};rows.push(ns);} ns.w.push(it.n+' ('+fmt(rem)+' h)'); rem=0; break;}
+    var use=Math.min(rem,rows[k].left); rows[k].left-=use; rem-=use; rows[k].w.push(it.n+' ('+fmt(use)+' h)');
+   }
+  });
+  var spare=sched-need;
+  var line=document.getElementById('verdict');
+  if(sched<=0){line.textContent='Enter your scheduled hours for each day first.'; line.className='status-line miss';}
+  else if(spare>=-0.0001){line.textContent='The plan fits. Steps '+fmt(total)+' h, plus buffer '+fmt(buffer)+' h, is '+fmt(need)+' h of your '+fmt(sched)+' scheduled hours. Spare: '+fmt(Math.max(spare,0))+' h.'; line.className='status-line good';}
+  else {line.textContent='The plan does not fit. Steps and buffer need '+fmt(need)+' h and you are scheduled for '+fmt(sched)+' h, which is '+fmt(-spare)+' h short. Tell your supervisor now, with what you can still finish by the due date and what would need more time.'; line.className='status-line miss';}
+  var tb=document.getElementById('plan'); tb.innerHTML='';
+  rows.forEach(function(r){
+   if(r.c<=0&&r.w.length===0)return;
+   var tr=document.createElement('tr');
+   var td1=document.createElement('td'); td1.textContent=r.d; var td2=document.createElement('td'); td2.textContent=r.c?fmt(r.c)+' h':'-'; var td3=document.createElement('td'); td3.textContent=r.w.length?r.w.join('; '):'Nothing planned';
+   tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3); tb.appendChild(tr);
+  });
+ }
+ var capHost=document.getElementById('cap');
+ days.forEach(function(d,i){
+  var w=document.createElement('div'); var l=document.createElement('label'); l.htmlFor='c'+i; l.textContent=d; var inp=document.createElement('input'); inp.type='text'; inp.inputMode='decimal'; inp.id='c'+i; inp.value=cap[i]; inp.autocomplete='off';
+  inp.addEventListener('input',function(){cap[i]=num(inp.value);calc();}); w.appendChild(l); w.appendChild(inp); capHost.appendChild(w);
+ });
+ document.getElementById('buf').addEventListener('input',calc);
+ document.getElementById('add').addEventListener('click',function(){if(steps.length<8){steps.push({n:'',h:1});renderSteps();calc();document.getElementById('sn'+(steps.length-1)).focus();}});
+ document.getElementById('remove').addEventListener('click',function(){if(steps.length>1){steps.pop();renderSteps();calc();}});
+ renderSteps(); calc();
+})();
+</script>
+</body>
+</html>
